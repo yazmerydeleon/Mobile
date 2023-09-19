@@ -25,7 +25,6 @@ public class ScoreSystem : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-        scoreText.text = "Score: " + score;
-        Debug.Log("Score: " + score); // Output the score to the console (can be replaced with UI updates)
+        scoreText.text = score + " Ganaste!!!";
     }
 }

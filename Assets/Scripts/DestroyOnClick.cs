@@ -1,6 +1,12 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class DestroyOnClick : MonoBehaviour
 {
+    [SerializeField] private GameObject feedbackTextPrefab;  // A prefab that contains the feedback text as a UI element
+    [SerializeField] private Vector3 textOffset; // Adjust this to position the text above/beside your game object
+
     private void Update()
     {
         // For PC (Unity Editor or standalone build)
@@ -26,8 +32,16 @@ public class DestroyOnClick : MonoBehaviour
             if (hit.collider.gameObject == this.gameObject)
             {
                 ScoreSystem.instance.AddScore(10);
+
+                ShowFeedbackText();
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void ShowFeedbackText()
+    {
+        GameObject feedbackText = Instantiate(feedbackTextPrefab, transform.position + textOffset, Quaternion.identity);
+        Destroy(feedbackText, 1f); // Destroy the feedback text after 2 seconds
     }
 }

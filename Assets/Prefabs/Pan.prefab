@@ -119,6 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e00087baa5e6842ba52f3afbc6e8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feedbackTextPrefab: {fileID: 4588742591290610486, guid: 17624631adc385840b722a57354e30a2,
+    type: 3}
+  textOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2128562557524089355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,4 +134,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e640568a4b9e0d741a7ebde699be1d9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 2.5

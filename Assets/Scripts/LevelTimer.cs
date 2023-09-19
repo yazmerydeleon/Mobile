@@ -2,8 +2,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-
-public class GameTimer : MonoBehaviour
+public class LevelTimer : MonoBehaviour
 {
     public static event Action OnTimerFinished;
 
@@ -11,6 +10,10 @@ public class GameTimer : MonoBehaviour
     [SerializeField] private float countdownTime = 90f;  // Starting time for the countdown in seconds
 
     private float remainingTime;
+    private bool hasTimerFinished = false;  // This flag ensures the OnTimerFinished event is triggered only once
+
+    // Game active state flag
+    public static bool isGameActive = true;
 
     private void Start()
     {
@@ -24,21 +27,18 @@ public class GameTimer : MonoBehaviour
         {
             remainingTime -= Time.deltaTime;
 
-            // Convert the remaining time to seconds
-            int seconds = (int)(remainingTime);
+            int minutes = (int)(remainingTime / 60);
+            int seconds = (int)(remainingTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-            // Display the countdown timer
-            timerText.text = seconds.ToString();
         }
-        else
+        else if (!hasTimerFinished)  // Check the flag to prevent multiple invocations
         {
             timerText.text = "0";
-            if (OnTimerFinished != null)
-            {
-                OnTimerFinished.Invoke();
-            }
+            OnTimerFinished?.Invoke();  // The '?' checks if there are any subscribers before invoking
+            hasTimerFinished = true;  // Set the flag
+            isGameActive = false;     // Set the game state to inactive once the timer finishes
         }
-
     }
 
     // Getter method to check if the countdown has finished
