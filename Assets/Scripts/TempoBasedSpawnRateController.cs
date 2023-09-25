@@ -1,24 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum GameMode { Easy, Hard }
 
 public class TempoBasedSpawnRateController : MonoBehaviour
 {
+    [Header("Song Management")]
+    public SongManager songManager;
+    public bool isEasyMode = true; // Whether the game is in easy mode or hard mode
+    public int currentLevelIndex = 0; // Which level (0-based index)
 
+    [Header("Prompt Prefabs and Spawn Points")]
     [SerializeField] private GameObject[] promptPrefabs;  // Array of rhythmic prompt prefabs
-    [SerializeField] private float spawnRate = 2.0f; // Initial spawn rate
+    [SerializeField] private Transform[] spawnPoints; // Array of spawn points
 
+    [Header("Spawn Rate Configuration")]
+    [SerializeField] private float spawnRate = 2.0f; // Initial spawn rate
     private float nextSpawnTime = 0;
     private float lastSpawnTime = 0; // To keep track of the last spawn time
     private float spawnBuffer = 0.9f;  // Adjust this value as needed to ensure a buffer between spawns
 
-    [Header("Tempo-based Spawn Rate Adjustments")]
-    public float[] tempoChangeTimes; // The times (in seconds) when tempo changes
-    public float[] spawnRatesForTempos; // The spawn rates for each tempo
-
+    private float[] tempoChangeTimes; // The times (in seconds) when tempo changes
+    private float[] spawnRatesForTempos; // The spawn rates for each tempo
     private int currentTempoIndex = 0; // To track which tempo we're currently on
 
-    [SerializeField] private Transform[] spawnPoints; // Array of spawn points
+    private void Start()
+    {
+        // Fetching the song data based on the mode and level
+        SongData currentSong = songManager.GetCurrentSongData(isEasyMode, currentLevelIndex);
+        tempoChangeTimes = currentSong.tempoChangeTimes;
+        spawnRatesForTempos = currentSong.spawnRatesForTempos;
+    }
 
     void Update()
     {

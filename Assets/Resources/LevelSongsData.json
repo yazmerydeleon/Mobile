@@ -1,0 +1,28 @@
+{
+  "levels": [
+    {
+      "easyModeSong": {
+        "songName": "EasySong1",
+        "tempoChangeTimes": [0, 10, 20],
+        "spawnRatesForTempos": [2.0, 1.5, 1.0]
+      },
+      "hardModeSong": {
+        "songName": "HardSong1",
+        "tempoChangeTimes": [0, 10, 20],
+        "spawnRatesForTempos": [1.5, 1.0, 0.5]
+      }
+    },
+    {
+      "easyModeSong": {
+        "songName": "EasySong2",
+        "tempoChangeTimes": [0, 15, 30],
+        "spawnRatesForTempos": [2.5, 2.0, 1.0]
+      },
+      "hardModeSong": {
+        "songName": "HardSong2",
+        "tempoChangeTimes": [0, 15, 30],
+        "spawnRatesForTempos": [1.5, 1.2, 0.8]
+      }
+    }
+  ]
+}

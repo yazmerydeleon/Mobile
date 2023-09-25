@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1011479065042912060}
   - component: {fileID: -7263581723262019917}
   - component: {fileID: 6907661860456081027}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,10 +105,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 0.5096814
+  m_Height: 2.2828026
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: -0.009681311, y: -0.012671733, z: -0.00000008085914}
 --- !u!114 &-7263581723262019917
 MonoBehaviour:
   m_ObjectHideFlags: 0

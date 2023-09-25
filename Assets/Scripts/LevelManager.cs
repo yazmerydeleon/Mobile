@@ -1,12 +1,14 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreDisplay;
     [SerializeField] private GameObject endLevelPanel;  // A UI Panel to display level-end info
 
+    [SerializeField] private TMP_Text NextLevelText;
     private void OnEnable()
     {
         LevelTimer.OnTimerFinished += EndLevel;
@@ -36,6 +38,12 @@ public class LevelManager : MonoBehaviour
         LevelTimer.OnTimerFinished -= EndLevel; // To ensure we don't have multiple subscriptions
                                                // Reload the current scene (i.e., replay the level)
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void NextLevel()
+    {        
+        // Display message
+        NextLevelText.gameObject.SetActive(true);
     }
 
 }
