@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+    public ParticleSystem levelStartParticles; // Drag your Particle System here in the Inspector
+
     [SerializeField] private TextMeshProUGUI scoreDisplay;
     [SerializeField] private GameObject endLevelPanel;  // A UI Panel to display level-end info
 
