@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PromptMovement : MonoBehaviour
 {
-    public float speed = 2.0f;
+    public float speed = 1.0f;
 
     void Update()
     {
