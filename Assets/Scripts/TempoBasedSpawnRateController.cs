@@ -7,7 +7,10 @@ public class TempoBasedSpawnRateController : MonoBehaviour
 {
     [Header("Song Management")]
     public SongManager songManager;
-    public bool isEasyMode = true; // Whether the game is in easy mode or hard mode
+
+    [Header("Controllers")]
+    public StartLevelController startLevelController;  // Drag and drop the StartLevelController here
+
     public int currentLevelIndex = 0; // Which level (0-based index)
 
     [Header("Prompt Prefabs and Spawn Points")]
@@ -24,18 +27,26 @@ public class TempoBasedSpawnRateController : MonoBehaviour
     private float[] spawnRatesForTempos; // The spawn rates for each tempo
     private int currentTempoIndex = 0; // To track which tempo we're currently on
 
-    private void Start()
+    //The purpose here is to provide a method to set up the TempoBasedSpawnRateController with the appropriate game mode after a player's selection.
+
+    public void Initialize()
     {
-        // Fetching the song data based on the mode and level
+        bool isEasyMode = startLevelController.IsEasyModeSelected;
+
+        Debug.Log("isEasyMode:" + isEasyMode);
+
+        // Fetching the song data based on the mode
         SongData currentSong = songManager.GetCurrentSongData(isEasyMode, currentLevelIndex);
         tempoChangeTimes = currentSong.tempoChangeTimes;
         spawnRatesForTempos = currentSong.spawnRatesForTempos;
     }
-
-    void Update()
+    private void Update()
     {
         // Check if the game is active before doing anything else
         if (!LevelTimer.isGameActive) return;
+        if (tempoChangeTimes == null) return;
+
+        Debug.Log($"currentTempoIndex: {currentTempoIndex}, tempoChangeTimes: {tempoChangeTimes}, spawnRatesForTempos: {spawnRatesForTempos}");
 
         // Check for tempo change
         if (currentTempoIndex < tempoChangeTimes.Length && Time.time >= tempoChangeTimes[currentTempoIndex])
@@ -53,7 +64,7 @@ public class TempoBasedSpawnRateController : MonoBehaviour
         }
     }
 
-    void SpawnPrompt()
+    private void SpawnPrompt()
     {
         // Randomly select one of the prefabs
         GameObject selectedPrefab = promptPrefabs[Random.Range(0, promptPrefabs.Length)];
