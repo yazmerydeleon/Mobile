@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class DestroyOnClick : MonoBehaviour
 {
@@ -34,33 +35,18 @@ public class DestroyOnClick : MonoBehaviour
             }
         }
     }
-    private void ShowFeedbackAndDestroy(Vector3 position)
+    private void ShowFeedbackAndDestroy(Vector3 worldPosition)
     {
-        GameObject feedbackInstance = Instantiate(feedbackTextPrefab, position, Quaternion.identity, transform.parent);
-        feedbackInstance.transform.position = position + Vector3.up; // Small offset upwards
+        // Instantiate the feedback text at the game object's position
+        GameObject feedbackInstance = Instantiate(feedbackTextPrefab, worldPosition, Quaternion.identity);
 
-        // Assuming the feedbackInstance will destroy itself after some time (like using an animation or fading out)
+        // If the feedback text is too large or small in the world, adjust its scale here
+        feedbackInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f); // You can adjust the scale as needed
+
+        // Optionally, you can add logic to destroy the feedbackInstance after some time
+        Destroy(feedbackInstance, 2.0f);  // for example, it'll destroy after 2 seconds
 
         Destroy(gameObject);
     }
-    //private IEnumerator DelayedDestroy()
-    //{
-    //    yield return new WaitForSeconds(1.0f); // You can adjust this time as needed
-    //    Destroy(gameObject);
-    //}
-
-    //private IEnumerator FeedbackFadeIn()
-    //{
-    //    feedbackText.alpha = 0;
-    //    feedbackText.gameObject.SetActive(true);
-    //    float duration = 0.5f; // Fade in over 0.5 seconds, adjust as needed
-    //    float elapsed = 0f;
-    //    while (elapsed < duration)
-    //    {
-    //        elapsed += Time.deltaTime;
-    //        feedbackText.alpha = Mathf.Lerp(0, 1, elapsed / duration);
-    //        yield return null;
-    //    }
-    //}
 
 }
