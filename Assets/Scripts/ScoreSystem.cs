@@ -10,7 +10,7 @@ public class ScoreSystem : MonoBehaviour
     public delegate void ScoreChangedDelegate(int newScore);
     public static event ScoreChangedDelegate OnScoreChanged;
 
-    public CircularScoreBar circularScoreBar;  // Drag and drop the CircularScoreBar component here in the inspector.
+    public HeartScoreBar circularScoreBar;  // Drag and drop the HeartScoreBar component here in the inspector.
     public int thresholdToShowCircularBar = 50; // Define your threshold value here, for instance, I'm using 50 as a placeholder.
 
     private void Awake()
@@ -34,7 +34,7 @@ public class ScoreSystem : MonoBehaviour
 
         if (score >= thresholdToShowCircularBar)
         {
-            circularScoreBar.circularBar.gameObject.SetActive(true);
+            circularScoreBar.HeartBar.gameObject.SetActive(true);
         }
 
         OnScoreChanged?.Invoke(score);  // <-- Raise the event here

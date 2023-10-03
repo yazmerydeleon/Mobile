@@ -4,46 +4,56 @@ using UnityEngine;
 
 public class DissolvingController : MonoBehaviour
 {
-    public MeshRenderer skinnedMesh;
+    public List<MeshRenderer> skinnedMeshes;  // List of MeshRenderers
 
-    private Material[] skinnedMaterials;
+    private List<Material[]> skinnedMaterialsList = new List<Material[]>();
 
     public float dissolveRate = 0.0125f;
     public float refreshRate = 0.025f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        if(skinnedMesh != null) 
+        foreach (var mesh in skinnedMeshes)
         {
-            skinnedMaterials = skinnedMesh.materials;
+            if (mesh != null)
+            {
+                skinnedMaterialsList.Add(mesh.materials);
+            }
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(DissolveCoRoutine());
         }
     }
-    IEnumerator DissolveCoRoutine()
+
+    public IEnumerator DissolveCoRoutine()
     {
-        if(skinnedMaterials.Length > 0) 
+        float counter = 0;
+
+        bool allDissolved = false;
+        while (!allDissolved)
         {
-            float counter = 0;
+            counter += dissolveRate;
 
-            while (skinnedMaterials[0].GetFloat("_DissolveAmount") < 1)
+            allDissolved = true;
+            foreach (var materials in skinnedMaterialsList)
             {
-                counter += dissolveRate;
-                for(int i = 0; i < skinnedMaterials.Length; i++)
+                for (int i = 0; i < materials.Length; i++)
                 {
-                    skinnedMaterials[i].SetFloat("_DissolveAmount", counter);
-                }                
+                    materials[i].SetFloat("_DissolveAmount", counter);
 
-                yield return new WaitForSeconds(refreshRate);
+                    if (materials[i].GetFloat("_DissolveAmount") < 1)
+                    {
+                        allDissolved = false;
+                    }
+                }
             }
+
+            yield return new WaitForSeconds(refreshRate);
         }
     }
 }

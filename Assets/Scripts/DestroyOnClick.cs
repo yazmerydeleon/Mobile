@@ -6,12 +6,15 @@ using Unity.VisualScripting;
 public class DestroyOnClick : MonoBehaviour
 {
     [SerializeField] private GameObject feedbackTextPrefab;
+
+    public static bool canClickObjects = true;
     private void Update()
     {
         // For PC (Unity Editor or standalone build)
         if (Input.GetMouseButtonDown(0))
         {
             HandleInteraction(Input.mousePosition);
+            Debug.Log("GetMouseButtonDown");
         }
 
         // For Mobile
@@ -23,6 +26,8 @@ public class DestroyOnClick : MonoBehaviour
 
     private void HandleInteraction(Vector2 position)
     {
+        if (!canClickObjects) return; // This prevents interactions if clicking is disabled.
+
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit hit;
 
@@ -32,6 +37,7 @@ public class DestroyOnClick : MonoBehaviour
             {
                 ScoreSystem.instance.AddScore(10);
                 ShowFeedbackAndDestroy(hit.point);
+                Debug.Log("HandleInteraction");
             }
         }
     }

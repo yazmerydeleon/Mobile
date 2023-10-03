@@ -46,7 +46,7 @@ public class TempoBasedSpawnRateController : MonoBehaviour
         if (!LevelTimer.isGameActive) return;
         if (tempoChangeTimes == null) return;
 
-        Debug.Log($"currentTempoIndex: {currentTempoIndex}, tempoChangeTimes: {tempoChangeTimes}, spawnRatesForTempos: {spawnRatesForTempos}");
+        //Debug.Log($"currentTempoIndex: {currentTempoIndex}, tempoChangeTimes: {tempoChangeTimes}, spawnRatesForTempos: {spawnRatesForTempos}");
 
         // Check for tempo change
         if (currentTempoIndex < tempoChangeTimes.Length && Time.time >= tempoChangeTimes[currentTempoIndex])
