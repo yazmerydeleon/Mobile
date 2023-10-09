@@ -16,8 +16,8 @@ public class HeartScoreBar : MonoBehaviour
     public AudioSource backgroundMusic;
     private float originalVolume;
 
-    public AudioSource audioSource; // Drag the AudioSource component here in the inspector.
-    public AudioClip animationSound; // Drag your sound effect here in the inspector.
+  //  public AudioSource audioSource; // Drag the AudioSource component here in the inspector.
+  //  public AudioClip animationSound; // Drag your sound effect here in the inspector.
 
     private void Awake()
     {
@@ -69,21 +69,22 @@ public class HeartScoreBar : MonoBehaviour
     private IEnumerator ResetHeartBarAfterDissolve()
     {
         // Start the dissolve effect
-        yield return StartCoroutine(dissolvingController.DissolveCoRoutine());
+        yield return StartCoroutine(dissolvingController.DissolveCoRoutine());        
 
-        // After dissolve is complete, reset the heart bar fill
-        HeartBar.fillAmount = 0;
+        // Restore the volume of the background music
+        backgroundMusic.volume = originalVolume;
 
         // Restore the ability to click on plates
         DestroyOnClick.canClickObjects = true;
 
-        // Restore the volume of the background music
-        backgroundMusic.volume = originalVolume;
+        // After dissolve is complete, reset the heart bar fill
+        HeartBar.fillAmount = 0;
+        maxScore = 1000;
     }
 
     public void PlaySound()
     {
-        audioSource.clip = animationSound;
-        audioSource.Play();
+      //  audioSource.clip = animationSound;
+       // audioSource.Play();
     }
 }

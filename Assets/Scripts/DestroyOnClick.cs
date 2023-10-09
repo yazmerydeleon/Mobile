@@ -31,6 +31,10 @@ public class DestroyOnClick : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit hit;
 
+        // Add this line to visualize the ray in the editor.
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow, 2f);// Add this line to visualize the ray in the editor.
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow, 2f);
+
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.collider.gameObject == this.gameObject)
