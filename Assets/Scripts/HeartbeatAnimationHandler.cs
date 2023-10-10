@@ -6,7 +6,7 @@ public class HeartbeatAnimationHandler : MonoBehaviour
 
     public void OnAnimationCompleted()
     {
-        heartScoreBar.OnAnimationCompleted(); // Or whatever method you want to call in HeartScoreBar
+       // heartScoreBar.OnAnimationCompleted(); // Or whatever method you want to call in HeartScoreBar
     }
 
     //public void OnAnimationStarted()

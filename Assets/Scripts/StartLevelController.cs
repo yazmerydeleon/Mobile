@@ -15,7 +15,7 @@ public class StartLevelController : MonoBehaviour
     {
         Time.timeScale = 0;  // Pause the game
         StartOfLevelPanel.SetActive(true);  // Ensure the panel is visible
-       // gameMusic.Stop(); // Make sure the music is not playing
+         gameMusic.Stop(); // Make sure the music is not playing
          gameMusic.Play(); 
     }
 
