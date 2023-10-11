@@ -5,24 +5,18 @@ using UnityEngine.UI;
 public class HeartScoreBar : MonoBehaviour
 {
     public Image HeartBar; // Drag the fill Image (circular) here in the inspector.  
-    public int maxScore = 100; // This can be set to any value which represents a full circle/score.
+    public int maxScore = 200; // This can be set to any value which represents a full circle/score.
 
-  //  public Animator animator; // Drag the Animator component of your animated object here
+    public ParticleSystem heartFullParticles;
+
+    public GameObject prefabToEnable;
+
+    private bool resettingHeartBar = false; // New variable to check if we should reset the bar
 
     public DissolvingController dissolvingController;
 
-    //private string animationTrigger = "PlayHeartMovementTrigger"; // Match this with the trigger name in your Animator Controller
-
-   // public AudioSource backgroundMusic;
     private float originalVolume;
 
-  //  public AudioSource audioSource; // Drag the AudioSource component here in the inspector.
-  //  public AudioClip animationSound; // Drag your sound effect here in the inspector.
-
-    //private void Awake()
-    //{
-    //    originalVolume = backgroundMusic.volume;
-    //}
 
     private void OnEnable()
     {
@@ -33,7 +27,6 @@ public class HeartScoreBar : MonoBehaviour
     {
         ScoreSystem.OnScoreChanged -= UpdateScoreBar;  // Unsubscribe from the OnScoreChanged event
     }
-
     public void UpdateScoreBar(int newScore)
     {
         HeartBar.fillAmount = (float)newScore / maxScore;
@@ -41,52 +34,33 @@ public class HeartScoreBar : MonoBehaviour
         // Check if the score bar is full
         if ((float)newScore / maxScore >= 1.0f)
         {
-            // Disallow clicking on plates while animation is playing
-         //   DestroyOnClick.canClickObjects = false;
+            EnablePrefab();
+            StartHeartFullParticles();
 
-            // Reduce the volume of the background music
-      //      backgroundMusic.volume *= 0.5f;  // This reduces the volume to half. Adjust as needed.
+            dissolvingController.BeginDissolve();
 
-            // PlayAnimation();
+            resettingHeartBar = true;
 
-            StartCoroutine(ResetHeartBarAfterDissolve());
+            // After dissolve is complete, reset the heart bar fill
+            HeartBar.fillAmount = 0;
+            maxScore = 2000;
         }
     }
-    private void PlayAnimation()
-    {
-        // Trigger the animation
-       // animator.SetTrigger(animationTrigger);
 
+    private void EnablePrefab()
+    {
+        prefabToEnable.SetActive(true);
     }
-    //public void OnAnimationCompleted()
-    //{
-    //    // Disable the GameObject with the animation
-    //      animator.gameObject.SetActive(false);
-
-    //   // StartCoroutine(dissolvingController.DissolveCoRoutine());
-
-    //    StartCoroutine(ResetHeartBarAfterDissolve());
-    //}
-
-    private IEnumerator ResetHeartBarAfterDissolve()
+    private void StartHeartFullParticles()
     {
-        // Start the dissolve effect
-        yield return StartCoroutine(dissolvingController.DissolveCoRoutine());        
-
-        // Restore the volume of the background music
-        //backgroundMusic.volume = originalVolume;
-
-        // Restore the ability to click on plates
-        DestroyOnClick.canClickObjects = true;
-
-        // After dissolve is complete, reset the heart bar fill
-        HeartBar.fillAmount = 0;
-        maxScore = 1000;
+        heartFullParticles.Play();
+        StartCoroutine(StopParticlesAfterTime(10f));
     }
 
-    public void PlaySound()
+    private IEnumerator StopParticlesAfterTime(float delay)
     {
-      //  audioSource.clip = animationSound;
-       // audioSource.Play();
+        yield return new WaitForSeconds(delay);
+        heartFullParticles.Stop();
     }
+
 }

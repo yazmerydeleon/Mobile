@@ -3,13 +3,13 @@
     {
       "easyModeSong": {
         "songName": "theafrobeat",
-        "tempoChangeTimes": [0, 10, 20, 29, 49, 59],
-        "spawnRatesForTempos": [1, 2, 3, 3.5, 2.5, 1]
+        "tempoChangeTimes": [0, 10, 20, 29, 49, 59, 80],
+        "spawnRatesForTempos": [1, 1.5, 1, 0.5, 1.5, 2, 3]
       },
       "hardModeSong": {
         "songName": "happyday",
         "tempoChangeTimes": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90],
-        "spawnRatesForTempos": [1, 2, 3, 4, 5, 5.5, 4, 3, 2, 1]
+        "spawnRatesForTempos": [1, 0.5, 1, 1.5, 0.5, 1, 1.5, 1, 2, 1]
       }
     }
   ]

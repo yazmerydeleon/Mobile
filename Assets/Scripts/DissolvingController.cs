@@ -11,6 +11,10 @@ public class DissolvingController : MonoBehaviour
     public float dissolveRate = 0.0125f;
     public float refreshRate = 0.025f;
 
+    private float counter = 0;
+
+    public bool startDissolving = false;
+
     private void Start()
     {
         foreach (var mesh in skinnedMeshes)
@@ -24,22 +28,12 @@ public class DissolvingController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(DissolveCoRoutine());
-        }
-    }
-
-    public IEnumerator DissolveCoRoutine()
-    {
-        float counter = 0;
-
-        bool allDissolved = false;
-        while (!allDissolved)
+        if (startDissolving)
         {
             counter += dissolveRate;
 
-            allDissolved = true;
+            bool allDissolved = true;
+
             foreach (var materials in skinnedMaterialsList)
             {
                 for (int i = 0; i < materials.Length; i++)
@@ -53,7 +47,18 @@ public class DissolvingController : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(refreshRate);
+            // Reset conditions if all are dissolved
+            if (allDissolved)
+            {
+                startDissolving = false;
+                counter = 0;
+            }
         }
+    }
+
+    // This method can be called externally to start the dissolve effect
+    public void BeginDissolve()
+    {
+        startDissolving = true;
     }
 }
